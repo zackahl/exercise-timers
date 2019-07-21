@@ -1,4 +1,4 @@
-# Country Info
+# Exercise Timers
 Stopwatch, countdown and interval timers to use when exercising.
 
 Try it out here: www.exercise-timers.com
