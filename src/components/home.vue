@@ -26,7 +26,7 @@
       <v-layout wrap align-end>
         <v-flex xs12 sm4>
           <h4>Follow</h4>
-          <v-btn v-for="(icon, index) in $store.state.socials.icons" :aria-label="$store.state.socials.links[index]" :href="$store.state.socials.links[index]" icon>
+          <v-btn v-for="(icon, index) in $store.state.socials.icons" :aria-label="$store.state.socials.links[index]" :href="$store.state.socials.links[index]" v-bind:key="index" icon>
             <v-icon size="30px">{{ icon }}</v-icon>
           </v-btn>
         </v-flex>
@@ -37,7 +37,7 @@
         </v-flex>
         <v-flex xs12 sm4>
           <h4>Share</h4>
-          <v-btn v-for="(icon, index) in $store.state.shares.icons" :aria-label="$store.state.shares.links[index]" :href="$store.state.shares.links[index]" icon>
+          <v-btn v-for="(icon, index) in $store.state.shares.icons" :aria-label="$store.state.shares.links[index]" :href="$store.state.shares.links[index]" v-bind:key="index" icon>
             <v-icon size="30px">{{ icon }}</v-icon>
           </v-btn>
         </v-flex>

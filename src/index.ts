@@ -1,4 +1,5 @@
-// Import Vue and styles
+// Import Vue, styles and polyfills
+import 'babel-polyfill';
 import Vue from "vue";
 import Vuetify, {
   VApp,

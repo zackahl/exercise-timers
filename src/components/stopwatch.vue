@@ -2,8 +2,8 @@
   <div class="content">
     <v-container fluid fill-height>
       <v-layout wrap align-center justify-center>
-        <v-switch v-model="stopwatch.animation" value prepend-icon="adjust" style="flex: 0; position: absolute; bottom: 50px; right: 5px"></v-switch>
-        <v-flex xs12 py-5 mb-5>
+        <v-switch v-model="stopwatch.animation" value prepend-icon="adjust" style="flex: 0; position: fixed; top: 40px; right: 0;"></v-switch>
+        <v-flex xs12 mb-5>
           <transition name="fade" mode="out-in">
             <v-progress-circular v-if="stopwatch.animation" :rotate="-90" style="width: 30vw; height: 30vw; min-width: 290px; min-height: 290px" :width="1" :value="percentage" color="accent">
               <span class="timer" style="font-size: calc(4vw + 30px)">{{ stopwatch.time | hms }}</span>

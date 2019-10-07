@@ -4,7 +4,7 @@
       <v-layout wrap align-center justify-center>
         <v-dialog v-model="dialog" width="500" pt-5 persistent>
           <template v-slot:activator="{ on }">
-            <v-btn color="dark light--text" large dark v-on="on" v-on:click="pause()" :ripple="{ class: 'accent--text' }">
+            <v-btn color="dark light--text" dark v-on="on" v-on:click="pause()" :ripple="{ class: 'accent--text' }">
               <v-icon color="accent" class="mr-2">timelapse</v-icon>Set Intervals
             </v-btn>
           </template>

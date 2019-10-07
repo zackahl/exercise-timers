@@ -2,10 +2,10 @@
   <div class="content">
     <v-container fluid fill-height>
       <v-layout row wrap align-center justify-center>
-        <v-switch v-model="time.animation" value prepend-icon="adjust" style="flex: 0; position: absolute; bottom: 50px; right: 5px"></v-switch>
+        <v-switch v-model="time.animation" value prepend-icon="adjust" style="flex: 0; position: fixed; top: 40px; right: 0;"></v-switch>
         <v-dialog v-model="dialog" width="500" pt-5 persistent>
           <template v-slot:activator="{ on }">
-            <v-btn color="dark light--text" pt-5 large dark v-on="on" v-on:click="pause()" :ripple="{ class: 'accent--text' }">
+            <v-btn color="dark light--text" style="top: 50px; left: 0; position: fixed;" pt-5 dark v-on="on" v-on:click="pause()" :ripple="{ class: 'accent--text' }">
               <v-icon color="accent" class="mr-2">alarm</v-icon>Set Countdown
             </v-btn>
           </template>
@@ -48,7 +48,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-flex xs12 py-5 mb-5>
+        <v-flex xs12 mb-5>
           <transition name="fade" mode="out-in">
             <v-progress-circular v-if="time.animation" :rotate="-90" style="width: 30vw; height: 30vw; min-width: 290px; min-height: 290px" :width="1" :value="percentage" color="accent">
               <span class="timer" style="font-size: calc(4vw + 30px)">{{ countdown | hms }}</span>
@@ -107,7 +107,7 @@
         get: function () {
           return this.time.countdown.hour(this.time.setHours).minute(this.time.setMinutes).second(this.time.setSeconds)
         },
-        set: function (newValue) {
+        set: function (newValue:any) {
           this.time.setHours = newValue.hour();
           this.time.setMinutes = newValue.minute();
           this.time.setSeconds = newValue.second();
