@@ -31,9 +31,9 @@
           </v-btn>
         </v-flex>
         <v-flex xs12 sm4 class="copyright">
-          <a aria-label="https://www.zacharykahl.com" href="https://www.zacharykahl.com" >&copy; Zachary Kahl 2019</a>
+          <a aria-label="https://www.zacharykahl.com" href="https://www.zacharykahl.com" >&copy; {{ year }} Zachary Kahl</a>
           <br>
-          <a aria-label="Sound effects provided by www.zapsplat.com" href=”https://www.zapsplat.com” style="font-size: 10px">Sound effects obtained from zapsplat.com</a>
+          <a aria-label="Sound effects provided by www.zapsplat.com" href="https://www.zapsplat.com" style="font-size: 10px">Sound effects obtained from zapsplat.com</a>
         </v-flex>
         <v-flex xs12 sm4>
           <h4>Share</h4>
@@ -52,7 +52,8 @@
   export default {
     data: function(){
       return {
-        title: 'Exercise Timers' 
+        title: 'Exercise Timers',
+        year: new Date().getFullYear()
       }
     },
 

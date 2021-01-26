@@ -1,5 +1,5 @@
 const path = require('path');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const autoprefixer = require("autoprefixer");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -86,11 +86,9 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
+      new TerserPlugin({
         parallel: true,
-        sourceMap: false,
-        uglifyOptions: {
+        terserOptions: {
           mangle: true
         }
       }),
