@@ -11,7 +11,7 @@
   import DefaultBar from './AppBar.vue'
   import DefaultSideNav from "./SideNav.vue";
   import DefaultView from './View.vue'
-  import DefaultSettingsMenu from '../../components/menu.vue'
+  import DefaultSettingsMenu from '@/components/Menu.vue'
   import { useDisplay } from "vuetify";
   import { useAppStore } from "@/store/app";
 
