@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "strict": false,
+    "noImplicitReturns": true,
+    "module": "esNext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "allowJs": true,
+    "lib": [ "es2015.promise", "es5", "dom" ]
+  }
+}

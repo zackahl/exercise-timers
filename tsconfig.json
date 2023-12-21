@@ -1,12 +1,31 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "strict": false,
-    "noImplicitReturns": true,
-    "module": "esNext",
+    "baseUrl": ".",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
-    "allowJs": true,
-    "lib": [ "es2015.promise", "es5", "dom" ]
-  }
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": [
+      "node",
+      "vuetify"
+    ],
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vite.config.ts"
+  ]
 }

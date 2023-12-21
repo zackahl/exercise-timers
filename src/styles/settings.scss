@@ -1,0 +1,63 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+
+// Google Fonts & Material Icons
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,900|Material+Icons');
+
+$f-pri: 'Lato', sans-serif;
+$f-sec: 'Roboto', sans-serif;
+
+html {
+   /* hide scrollbar but allow scrolling */
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+}
+
+body {
+  font-size: 16px;
+  line-height: 1;
+  margin: 0;
+  user-select: none;
+
+  h1, .text-h1,
+  h2, .text-h2,
+  h3, .text-h3,
+  h4, .text-h4,
+  h5, .text-h5,
+  h6, .text-h6,
+  .text-subtitle-1,
+  .text-subtitle-2 {
+    font-family: $f-pri;
+    font-weight: bold;
+  }
+
+  p {
+    line-height: 2rem;
+    margin: 0 1.5rem;
+  }
+
+  a {
+    text-decoration: none;
+    transition: .3s ease;
+
+    &:visited {
+      color: inherit;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

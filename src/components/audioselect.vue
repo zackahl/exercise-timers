@@ -1,121 +1,186 @@
 <template>
-  <v-flex>
-    <v-layout xs12 py-3 wrap>
-      <h4 class="pb-2">{{ title }}</h4>
-      <v-flex xs11>
-        <v-select color="accent" box v-model="currentValue" :items="items" :label="label" v-on:change="updateState()"></v-select>
-      </v-flex>
-      <v-flex xs1 my-2>               
-        <v-btn icon small flat color="primary" v-on:click="preview()">
-          <v-icon color="accent">play_circle_outline</v-icon>
-        </v-btn>
-      </v-flex>
-    </v-layout>
-  </v-flex>
+  <v-row>
+    <v-col cols="12">
+      <div class="text-subtitle-2 pb-2">{{ title }}</div>
+      <v-select
+        v-model="data.currentValue"
+        @update:model-value="updateState()"
+        :items="items"
+        :label="label"
+        hide-details
+      >
+        <template v-slot:append>
+          <v-btn variant="plain" icon="mdi-play" :disabled="data.currentValue === 'None'" @click="preview()" />
+        </template>
+      </v-select>
+    </v-col>
+  </v-row>
 </template>
 
-<script lang="ts">
-import store from '../store';
-import { Howl, Howler } from 'howler';
-  
-export default {
-  data: function(){
-    return {
-      currentValue: this.stateValue,
-      sounds: ['Beep (High)','Beep (Low)','Beep (Echo)','Blip','Buzz','Harp','Tick Tock'],
-      alarms: ['Alarm Clock (Classic)','Alarm Clock (Digital)','Buzz','Alert','Double Beep','Warning']
-    }
-  },
-  
-  created: function() {
-    this.currentValue = this.stateValue;
-  },
+<script lang="ts" setup>
+import { Howl } from "howler";
+import { useAppStore } from "@/store/app";
+import { ref, WritableComputedRef, computed } from "vue";
+import { storeToRefs } from "pinia";
+import soundEffects from "@/models/Audio";
 
-  computed: {
-    // Assign the state props to the correct select elements
-    stateValue: {
-      get: function() {
-        var option;
-        if(this.timer == "stopwatch") {
-          option = store.state.audio.stopwatch.sound;
-        }
-        if(this.timer == "countdown") {
-          if(this.audiotype == "sound") {
-            option = store.state.audio.countdown.sound;
-          }
-          if(this.audiotype == "alarm") {
-            option = store.state.audio.countdown.alarm;
-          }
-        }
-        if(this.timer == "interval") {
-          if(this.audiotype == "sound") {
-            option = store.state.audio.interval.sound;
-          }
-          if(this.audiotype == "alarm") {
-            option = store.state.audio.interval.alarm;
-          }
-        }
-        return option;
-      },
-      set: function (newValue) {
-        this.timer = newValue;
-        this.audiotype = newValue;
+const store = useAppStore();
+const { audio } = storeToRefs(store);
+
+const props = defineProps({
+  title: String,
+  label: String,
+  timer: String,
+  audiotype: String,
+});
+
+// Assign the state props to the correct select elements
+const stateValue: WritableComputedRef<string> = computed({
+  get(): string {
+    var option;
+
+    // Global
+    if (props.timer == "global") {
+      if (props.audiotype == "start") {
+        option = audio.value.global.start;
       }
-    },
-    // Define which items to display in select elements
-    items: {
-      get: function () {
-        var items = "";
-        if(this.audiotype === "sound") {
-          items = this.sounds;
-        } else if (this.audiotype === "alarm") {
-          items = this.alarms;
-        }
-        return items;
-      },
-      set: function (newValue) {
-        this.audiotype = newValue;
+      if (props.audiotype == "pause") {
+        option = audio.value.global.pause;
       }
     }
-  },
 
-  props: {
-    title: {type: String, default: ''},
-    label: {type: String, default: ''},
-    timer: {type: String, default: ''},
-    audiotype: {type: String, default: ''}
-  },
-
-  methods: {
-    // Update state values when select element value changes
-    updateState: function() {
-      if(this.timer == "stopwatch") {
-        store.state.audio.stopwatch.sound = this.currentValue;
-      }
-      if(this.timer == "countdown") {
-        if(this.audiotype == "sound") {
-          store.state.audio.countdown.sound = this.currentValue;
-        }
-        if(this.audiotype == "alarm") {
-          store.state.audio.countdown.alarm = this.currentValue;
-        }
-      }
-      if(this.timer == "interval") {
-        if(this.audiotype == "sound") {
-          store.state.audio.interval.sound = this.currentValue;
-        }
-        if(this.audiotype == "alarm") {
-          store.state.audio.interval.alarm = this.currentValue;
-        }
-      }
-    },
-    preview: function() {
-      var preview = new Howl({src: ['../sounds/' + this.currentValue + '.mp3']});
-      preview.play();
+    // Stopwatch
+    if (props.timer == "stopwatch") {
+      option = audio.value.stopwatch.oneMinute;
     }
-  },
 
-  components: { Howl },
-  store
+    // Countdown
+    if (props.timer == "countdown") {
+      if (props.audiotype == "tenSeconds") {
+        option = audio.value.countdown.tenSeconds;
+      }
+      if (props.audiotype == "completed") {
+        option = audio.value.countdown.completed;
+      }
+    }
+
+    // Interval
+    if (props.timer == "interval") {
+      if (props.audiotype == "fiveSeconds") {
+        option = audio.value.interval.fiveSeconds;
+      }
+      if (props.audiotype == "completed") {
+        option = audio.value.interval.completed;
+      }
+    }
+
+    return option as string;
+  },
+  set(newValue: string) {},
+});
+
+const data = ref({
+  currentValue: stateValue.value,
+  sounds: soundEffects,
+});
+
+const items: WritableComputedRef<string[]> = computed({
+  get: function () {
+    var items = [""];
+    // if (props.audiotype === "sound") {
+    //   items = data.value.sounds;
+    // }
+    // else if (props.audiotype === "sound-looped") {
+    //   items = data.value.soundsLooped;
+    // }
+    // else if (props.audiotype === "alarm") {
+    //   items = data.value.alarms;
+    // }
+
+    // Global
+    if (props.timer == "global") {
+      if (props.audiotype == "start") {
+        items = data.value.sounds.global.start;
+      }
+      if (props.audiotype == "pause") {
+        items = data.value.sounds.global.pause;
+      }
+    }
+
+    // Stopwatch
+    if (props.timer == "stopwatch") {
+      items = data.value.sounds.stopwatch.oneMinute;
+    }
+
+    // Countdown
+    if (props.timer == "countdown") {
+      if (props.audiotype == "tenSeconds") {
+        items = data.value.sounds.countdown.tenSeconds;
+      }
+      if (props.audiotype == "completed") {
+        items = data.value.sounds.countdown.completed;
+      }
+    }
+
+    // Interval
+    if (props.timer == "interval") {
+      if (props.audiotype == "fiveSeconds") {
+        items = data.value.sounds.intervals.fiveSeconds;
+      }
+      if (props.audiotype == "completed") {
+        items = data.value.sounds.intervals.completed;
+      }
+    }
+    
+
+    return items;
+  },
+  set: function (newValue) {
+    // props.audiotype = newValue;
+  },
+});
+
+const updateState = () => {
+  // Global
+  if (props.timer == "global") {
+    if (props.audiotype == "start") {
+      audio.value.global.start = data.value.currentValue;
+    }
+    if (props.audiotype == "pause") {
+      audio.value.global.pause = data.value.currentValue;
+    }
+  }
+
+  // Stopwatch
+  if (props.timer == "stopwatch") {
+    audio.value.stopwatch.oneMinute = data.value.currentValue;
+  }
+
+  // Countdown
+  if (props.timer == "countdown") {
+    if (props.audiotype == "tenSeconds") {
+      audio.value.countdown.tenSeconds = data.value.currentValue;
+    }
+    if (props.audiotype == "completed") {
+      audio.value.countdown.completed = data.value.currentValue;
+    }
+  }
+
+  // Intervals
+  if (props.timer == "interval") {
+    if (props.audiotype == "fiveSeconds") {
+      audio.value.interval.fiveSeconds = data.value.currentValue;
+    }
+    if (props.audiotype == "completed") {
+      audio.value.interval.completed = data.value.currentValue;
+    }
+  }
+};
+
+const preview = () => {
+  var preview = new Howl({
+    src: [new URL("../assets/sounds/" + data.value.currentValue + ".mp3", import.meta.url).href]
+  });
+  preview.play();
 };
 </script>
