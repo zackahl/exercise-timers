@@ -145,7 +145,7 @@
               <h4 class="pb-2">Background Animation</h4>
               <v-select
                 v-model="store.display.animation"
-                label="Colour"
+                label="Animation"
                 :items="display.animations"
               />
             </v-col>
@@ -154,7 +154,7 @@
               <v-select
                 v-model="store.display.font.type"
                 :items="display.fonts"
-                label="Font Type"
+                label="Type"
               ></v-select>
             </v-col>
             <v-col cols="12">
@@ -162,15 +162,15 @@
               <v-select
                 v-model="store.display.font.weight"
                 :items="display.weights"
-                label="Font Type"
+                label="Weight"
               ></v-select>
             </v-col>
             <v-col cols="12">
-              <h4 class="pb-2">Format</h4>
+              <h4 class="pb-2">Timer Format</h4>
               <v-select
                 v-model="store.display.format"
                 :items="display.formats"
-                label="Font Type"
+                label="Format"
               ></v-select>
             </v-col>
             <v-col cols="12">
